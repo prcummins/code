@@ -1,2 +1,2 @@
 vendors = ['Arista', 'Cisco','Juniper']
-print vendors[1]
+print (vendors[2])
