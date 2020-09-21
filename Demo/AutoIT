@@ -1,0 +1,56 @@
+COMMAND LINE
+configure lock
+show configuration lock
+configure session TEST
+show session-config diffs
+show configuration sessions detail
+commit
+configure unlock
+
+show config checkpoint
+hostname NEW-DUT
+configure checkpoint save
+show config checkpoint
+diff running-config checkpoint:
+configure replace checkpoint:
+
+
+
+XML CONNECT
+./connect.py | xmllint --format -
+
+
+POSTMAN GET
+https://34.83.48.244:4001/restconf/data/system/state/hostname
+
+https://34.83.48.244:4001/restconf/data/ietf-interfaces:interfaces/interface=Ethernet1/openconfig-interfaces:state/description
+
+POSTMAN PUT
+https://34.83.48.244:4001/restconf/data/system/config
+
+https://34.83.48.244:4001/restconf/data/ietf-interfaces:interfaces/interface=Ethernet1/config
+
+
+MODELS
+
+gnmic -a localhost:4002 -u admin -p admin --insecure capabilities
+
+GET
+
+gnmic -a localhost:4002 -u admin -p admin --insecure get --path 'interfaces/interface[name=Ethernet1]/state/description'
+
+SUBSCRIBE
+
+gnmic -a localhost:4002 -u admin -p admin --insecure sub --path "/interfaces/interface[name=Ethernet1]/subinterfaces/subinterface/state/counters/in-octets" --stream-mode sample --sample-interval 2s
+
+UPDATE
+
+gnmic -a localhost:4002 -u admin -p admin --insecure set --update-path 'system/config/hostname' --update-value NEW
+
+REPLACE
+
+gnmic -a localhost:4002 -u admin -p admin --insecure set --replace-path 'system/config/hostname' --replace-value NEW
+
+DELETE
+
+gnmic -a localhost:4002 -u admin -p admin --insecure set --delete 'system/config/hostname'
